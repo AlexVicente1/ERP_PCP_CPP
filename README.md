@@ -1,55 +1,140 @@
-# ERP_PCP_CPP - Chemical Industry ERP (PCP)
+# ERP PCP CPP
 
-Enterprise-grade C++17 project for Production Planning and Control in chemical manufacturing, inspired by industrial ERP workflows.
+Projeto de estudo em C++ para PCP (Planejamento e Controle da Producao), com foco na industria quimica, combinando:
 
-## Architecture
+- backend em C++17 com arquitetura em camadas
+- painel web para demonstracao de fluxo operacional
+- conceitos de seguranca, auditoria e rastreabilidade
 
-The solution follows Clean Architecture and SOLID-oriented boundaries:
+## Visao geral
 
-- `src/domain`: core business model (entities, enums, value objects, domain services)
-- `src/application`: orchestration layer (use cases, DTOs)
-- `src/infrastructure`: adapters (repositories, logging, API integration, DB abstraction)
-- `src/presentation/cli`: user interaction entrypoint
-- `src/security`: authentication (RBAC demo) and audit trail
-- `src/shared`: reusable cross-cutting utilities and exceptions
-- `src/quality`, `src/production`, `src/inventory`: reserved modules for specialized expansions
+O sistema cobre um fluxo essencial de ERP/PCP:
 
-## Implemented Industrial Modules
+- cadastro de produtos quimicos e propriedades
+- criacao de ordens de producao com validacoes de estoque
+- indicadores de painel (KPIs)
+- registros operacionais para auditoria
+- modelo extensivel para qualidade, inventario e producao
 
-1. Chemical formulation with revision history (`ChemicalProduct`, `FormulaRevision`)
-2. Lot traceability model (`BatchLot`)
-3. Chemical API integration abstraction (`ChemicalApiClient`)
-4. FISPQ report template generation (`FispqService`)
-5. PCP/MRP order planning with automatic consumption and purchase suggestion (`CreateProductionOrderUseCase`)
-6. Chemical inventory conversion mass-volume (`InventoryService`)
-7. Industrial security with RBAC and audit (`AuthService`, `AuditLogger`)
-8. Production execution lifecycle (`ProductionOrder`, `BatchStatus`)
-9. Quality control decision engine (`QualityService`, `QualityInspection`)
-10. Dashboard KPIs (`DashboardService`)
+## Arquitetura da solucao
 
-## Security Model
+O backend segue separacao de responsabilidades inspirada em arquitetura limpa e principios SOLID:
 
-Demo users:
+- `src/domain`: entidades, enumeracoes, objetos de valor e servicos de dominio
+- `src/application`: casos de uso e objetos de transferencia de dados
+- `src/infrastructure`: repositorios, registros, integracoes e abstracao de banco
+- `src/presentation/cli`: interface de linha de comando
+- `src/security`: autenticacao (RBAC) e trilha de auditoria
+- `src/shared`: utilitarios e excecoes compartilhadas
+- `src/quality`, `src/production`, `src/inventory`: modulos reservados para expansao
 
-- `admin` / `pcp123` -> Administrator
-- `engineer` / `pcp123` -> Chemical Engineer
+## Modulos implementados
 
-Role authorization is enforced before sensitive operations.
+1. Formulacao quimica com historico de revisao (`ChemicalProduct`, `FormulaRevision`)
+2. Rastreabilidade de lotes (`BatchLot`)
+3. Integracao com API quimica (`ChemicalApiClient`)
+4. Estrutura para relatorio FISPQ (`FispqService`)
+5. Planejamento PCP/MRP com sugestao de compra (`CreateProductionOrderUseCase`)
+6. Conversoes de inventario massa-volume (`InventoryService`)
+7. Controle de acesso por perfil e auditoria (`AuthService`, `AuditLogger`)
+8. Ciclo de vida de ordem (`ProductionOrder`, `BatchStatus`)
+9. Motor de decisao de qualidade (`QualityService`, `QualityInspection`)
+10. Servico de indicadores e painel (`DashboardService`)
 
-## Database Strategy
+## Estrutura do repositorio
 
-`SQLiteReadyDatabase` provides a concrete database abstraction designed for future SQLite wiring without changing business layers.
+```text
+ERP_PCP_CPP/
+|- controllers/
+|- core/
+|- data/
+|- models/
+|- repository/
+|- services/
+|- src/
+|  |- application/
+|  |- domain/
+|  |- infrastructure/
+|  |- presentation/
+|  |- security/
+|  `- shared/
+|- ui/
+|- utils/
+`- main.cpp
+```
 
-## Build Example (g++)
+## Requisitos
 
-From project root:
+- compilador C++ com suporte a C++17 (g++, clang ou MSVC)
+- Git
+- navegador moderno para o painel web
 
-`g++ -std=c++17 main.cpp src/domain/entities/*.cpp src/domain/services/*.cpp src/application/usecases/*.cpp src/infrastructure/repositories/*.cpp src/infrastructure/api/*.cpp src/infrastructure/database/*.cpp src/infrastructure/logging/*.cpp src/security/auth/*.cpp src/security/audit/*.cpp src/presentation/cli/*.cpp -o erp_pcp_enterprise.exe`
+## Compilacao e execucao (CLI)
 
-## Next Enterprise Steps
+No diretorio raiz do projeto:
 
-- Persist repositories into SQLite
-- Add formula version approval workflow
-- Implement lot genealogy reporting
-- Integrate external hazard/FISPQ APIs
-- Add REST API for web dashboard
+```bash
+g++ -std=c++17 main.cpp src/domain/entities/*.cpp src/domain/services/*.cpp src/application/usecases/*.cpp src/infrastructure/repositories/*.cpp src/infrastructure/api/*.cpp src/infrastructure/database/*.cpp src/infrastructure/logging/*.cpp src/security/auth/*.cpp src/security/audit/*.cpp src/presentation/cli/*.cpp -o erp_pcp_enterprise.exe
+```
+
+Depois:
+
+```bash
+./erp_pcp_enterprise.exe
+```
+
+## Painel web (UI)
+
+A interface web esta em `ui/` com as paginas:
+
+- `ui/login.html`
+- `ui/index.html`
+- `ui/produtos.html`
+- `ui/ordens.html`
+- `ui/logs.html`
+
+Para melhor compatibilidade (PWA/service worker), execute com servidor local simples:
+
+```bash
+python -m http.server 5500
+```
+
+Depois abra:
+
+- `http://localhost:5500/ui/login.html`
+
+Credenciais de demonstracao:
+
+- `admin` / `pcp123` (administrador)
+- `engineer` / `pcp123` (engenharia)
+
+## Seguranca
+
+- autenticacao por perfis (RBAC) para operacoes sensiveis
+- logs operacionais e auditoria para rastreabilidade
+- base preparada para endurecimento futuro (tokens, hashing robusto, trilha ampliada)
+
+## Estrategia de persistencia
+
+`SQLiteReadyDatabase` fornece uma abstração pronta para evoluir para SQLite sem acoplamento da regra de negocio.
+
+## Proximos passos
+
+- [ ] persistencia completa em SQLite
+- [ ] workflow de aprovacao de revisao de formula
+- [ ] genealogia de lotes e rastreabilidade avancada
+- [ ] integracao externa de risco/FISPQ
+- [ ] API REST para o painel web
+- [ ] pipeline CI/CD e testes automatizados
+
+## Imagens do sistema
+
+Adicione imagens em uma pasta `docs/images` e referencie aqui, por exemplo:
+
+```md
+![Painel principal](docs/images/dashboard.png)
+```
+
+## Licenca
+
+Projeto de estudo para fins academicos e demonstracao tecnica.
