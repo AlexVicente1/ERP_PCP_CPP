@@ -129,11 +129,9 @@ Credenciais de demonstracao:
 
 ## Imagens do sistema
 
-Adicione imagens em uma pasta `docs/images` e referencie aqui, por exemplo:
+### Painel principal
 
-```md
-![Painel principal](docs/images/dashboard.png)
-```
+![Painel principal do ERP PCP](docs/images/dashboard-interface.png)
 
 ## Licenca
 
