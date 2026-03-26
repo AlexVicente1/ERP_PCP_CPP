@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1220" />
+  <link rel="manifest" href="./manifest.json" />
+  <title>ERP PCP - Ordens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="ordens">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo"><div class="logo-dot"></div><div><h1>ERP PCP</h1><p>Production Planning</p></div></div>
+      <nav>
+        <a class="nav-item" href="./index.html">Dashboard</a>
+        <a class="nav-item" href="./produtos.html">Produtos</a>
+        <a class="nav-item active" href="./ordens.html">Ordens</a>
+        <a class="nav-item" href="./logs.html">Logs</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <header class="topbar glass">
+        <h2>Tela de Ordens de Produção</h2>
+        <div class="topbar-actions">
+          <button id="btnLogout" class="btn-outline">Sair</button>
+        </div>
+      </header>
+      <section class="grid">
+        <article class="panel glass">
+          <h3>Criar ordem</h3>
+          <form id="ordemForm" class="form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ordemNumero">Número OP</label>
+                <input type="number" id="ordemNumero" placeholder="Número OP" required />
+              </div>
+              <div class="form-group">
+                <label for="ordemProdutoId">ID do Produto</label>
+                <input type="number" id="ordemProdutoId" placeholder="ID do Produto" required />
+              </div>
+            </div>
+            <div class="form-row single">
+              <div class="form-group">
+                <label for="ordemQuantidade">Quantidade</label>
+                <input type="number" id="ordemQuantidade" placeholder="Quantidade" required />
+              </div>
+            </div>
+            <button type="submit">Criar Ordem</button>
+          </form>
+        </article>
+        <article class="panel glass">
+          <h3>Indicadores</h3>
+          <p>Total de ordens: <strong id="kpiOrdens">0</strong></p>
+          <ul id="logList" class="logs"></ul>
+        </article>
+      </section>
+      <section class="panel glass">
+        <h3>Ordens Registradas</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Número</th><th>Produto ID</th><th>Quantidade</th></tr></thead>
+            <tbody id="ordensBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <nav class="mobile-nav glass">
+    <a href="./index.html">Dashboard</a>
+    <a href="./produtos.html">Produtos</a>
+    <a class="active" href="./ordens.html">Ordens</a>
+    <a href="./logs.html">Logs</a>
+  </nav>
+  <script src="./auth.js"></script>
+  <script src="./pubchemApi.js"></script>
+  <script src="./app.js"></script>
+  <script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("./sw.js"); }</script>
+</body>
+</html>

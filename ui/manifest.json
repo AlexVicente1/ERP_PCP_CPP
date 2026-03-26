@@ -1,0 +1,10 @@
+{
+  "name": "ERP PCP Chemical",
+  "short_name": "ERP PCP",
+  "start_url": "./login.html",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "description": "ERP PCP para industria quimica, responsivo para desktop e mobile.",
+  "icons": []
+}

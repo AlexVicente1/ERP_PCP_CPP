@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1220" />
+  <link rel="manifest" href="./manifest.json" />
+  <title>ERP PCP - Produtos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="produtos">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo"><div class="logo-dot"></div><div><h1>ERP PCP</h1><p>Production Planning</p></div></div>
+      <nav>
+        <a class="nav-item" href="./index.html">Dashboard</a>
+        <a class="nav-item active" href="./produtos.html">Produtos</a>
+        <a class="nav-item" href="./ordens.html">Ordens</a>
+        <a class="nav-item" href="./logs.html">Logs</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <header class="topbar glass">
+        <h2>Tela de Produtos</h2>
+        <div class="topbar-actions">
+          <button id="btnLogout" class="btn-outline">Sair</button>
+        </div>
+      </header>
+      <section class="grid">
+        <article class="panel glass">
+          <h3>Cadastrar produto</h3>
+          <div class="form form-spacer">
+            <div class="form-row">
+              <input type="text" id="consultaQuimica" placeholder="Consulta prévia (ex.: acetone)" />
+              <button type="button" id="btnConsultarQuimica" class="btn-outline">Buscar no PubChem</button>
+            </div>
+          </div>
+          <form id="produtoForm" class="form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="produtoId">ID</label>
+                <input type="number" id="produtoId" placeholder="ID" required />
+              </div>
+              <div class="form-group">
+                <label for="produtoCodigo">Código</label>
+                <input type="text" id="produtoCodigo" placeholder="Código" required />
+              </div>
+            </div>
+            <div class="form-row single">
+              <div class="form-group">
+                <label for="produtoDescricao">Descrição</label>
+                <input type="text" id="produtoDescricao" placeholder="Descrição" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="produtoEstoque">Estoque Atual</label>
+                <input type="number" id="produtoEstoque" placeholder="Estoque Atual" required />
+              </div>
+              <div class="form-group">
+                <label for="produtoMinimo">Estoque Mínimo</label>
+                <input type="number" id="produtoMinimo" placeholder="Estoque Mínimo" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="produtoFormula">Fórmula Molecular</label>
+                <input type="text" id="produtoFormula" placeholder="Fórmula Molecular" />
+              </div>
+              <div class="form-group">
+                <label for="produtoPeso">Peso Molecular</label>
+                <input type="text" id="produtoPeso" placeholder="Peso Molecular" />
+              </div>
+            </div>
+            <button type="submit">Salvar Produto</button>
+          </form>
+        </article>
+        <article class="panel glass">
+          <h3>Indicadores</h3>
+          <p>Total de produtos: <strong id="kpiProdutos">0</strong></p>
+          <p>Estoque crítico: <strong id="kpiCritico">0</strong></p>
+          <ul id="logList" class="logs"></ul>
+        </article>
+      </section>
+      <section class="panel glass">
+        <h3>Lista de Produtos</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Código</th><th>Descrição</th><th>Fórmula</th><th>Peso Mol.</th><th>Estoque</th><th>Mínimo</th><th>Status</th></tr></thead>
+            <tbody id="produtosBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <nav class="mobile-nav glass">
+    <a href="./index.html">Dashboard</a>
+    <a class="active" href="./produtos.html">Produtos</a>
+    <a href="./ordens.html">Ordens</a>
+    <a href="./logs.html">Logs</a>
+  </nav>
+  <script src="./auth.js"></script>
+  <script src="./pubchemApi.js"></script>
+  <script src="./app.js"></script>
+  <script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("./sw.js"); }</script>
+</body>
+</html>
