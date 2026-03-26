@@ -398,6 +398,10 @@ a {
   flex-direction: column;
 }
 
+.align-end {
+  justify-content: flex-end;
+}
+
 .form-group label {
   font-size: 0.85rem;
   color: var(--muted);
@@ -591,6 +595,14 @@ tr:last-child td {
 
 .login-hint {
   margin-top: 10px;
+}
+
+.consulta-result {
+  margin-top: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 56px;
 }
 .mobile-nav {
   position: fixed;

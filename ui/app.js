@@ -18,6 +18,11 @@ const kpiCritico = getEl("kpiCritico");
 const btnConsultarQuimica = getEl("btnConsultarQuimica");
 const consultaQuimica = getEl("consultaQuimica");
 const loginForm = getEl("loginForm");
+const consultaProdutoForm = getEl("consultaProdutoForm");
+const consultaProdutoTermo = getEl("consultaProdutoTermo");
+const consultaProdutoResultado = getEl("consultaProdutoResultado");
+const reposicaoForm = getEl("reposicaoForm");
+let consultaProdutoSelecionadoId = null;
 
 const saveState = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 const loadState = () => {
@@ -66,7 +71,7 @@ const renderProdutos = () => {
   if (!produtosBody) return;
   produtosBody.innerHTML = "";
   if (!state.produtos.length) {
-    produtosBody.innerHTML = `<tr><td class="empty" colspan="6">Nenhum produto cadastrado.</td></tr>`;
+    produtosBody.innerHTML = `<tr><td class="empty" colspan="8">Nenhum produto cadastrado.</td></tr>`;
     return;
   }
   state.produtos.forEach((p) => {
@@ -75,6 +80,33 @@ const renderProdutos = () => {
     tr.innerHTML = `<td>${p.id}</td><td>${p.codigo}</td><td>${p.descricao}</td><td>${p.molecularFormula || "-"}</td><td>${p.molecularWeight || "-"}</td><td>${p.estoqueAtual}</td><td>${p.estoqueMinimo}</td><td class="${critico ? "status-critico" : "status-ok"}">${critico ? "Crítico" : "OK"}</td>`;
     produtosBody.appendChild(tr);
   });
+};
+
+const getProdutoByTermo = (termoRaw) => {
+  const termo = String(termoRaw || "").trim();
+  if (!termo) return null;
+  if (/^\d+$/.test(termo)) {
+    const id = Number(termo);
+    return state.produtos.find((p) => p.id === id) || null;
+  }
+  const termoLower = termo.toLowerCase();
+  return state.produtos.find((p) => p.codigo.toLowerCase() === termoLower) || null;
+};
+
+const renderConsultaProduto = (produto) => {
+  if (!consultaProdutoResultado) return;
+  if (!produto) {
+    consultaProdutoResultado.className = "consulta-result muted";
+    consultaProdutoResultado.textContent = "Produto não encontrado.";
+    return;
+  }
+  const status = produto.estoqueAtual < produto.estoqueMinimo ? "Crítico" : "OK";
+  consultaProdutoResultado.className = "consulta-result";
+  consultaProdutoResultado.innerHTML =
+    `<strong>${produto.codigo} - ${produto.descricao}</strong><br>` +
+    `Estoque atual: <strong>${produto.estoqueAtual}</strong> | ` +
+    `Estoque mínimo: <strong>${produto.estoqueMinimo}</strong> | ` +
+    `Status: <strong>${status}</strong>`;
 };
 
 const renderOrdens = () => {
@@ -195,8 +227,8 @@ const bindEvents = () => {
         id: Number(getEl("produtoId").value),
         codigo: getEl("produtoCodigo").value.trim(),
         descricao: getEl("produtoDescricao").value.trim(),
-        estoqueAtual: Number(getEl("produtoEstoque").value),
-        estoqueMinimo: Number(getEl("produtoMinimo").value),
+        estoqueAtual: 0,
+        estoqueMinimo: 0,
         molecularFormula: getEl("produtoFormula") ? getEl("produtoFormula").value.trim() : "",
         molecularWeight: getEl("produtoPeso") ? getEl("produtoPeso").value.trim() : ""
       };
@@ -205,6 +237,38 @@ const bindEvents = () => {
       saveState();
       addLog(`Produto ${produto.codigo} cadastrado.`);
       produtoForm.reset();
+      renderAll();
+    });
+  }
+
+  if (consultaProdutoForm && consultaProdutoTermo) {
+    consultaProdutoForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const produto = getProdutoByTermo(consultaProdutoTermo.value);
+      consultaProdutoSelecionadoId = produto ? produto.id : null;
+      renderConsultaProduto(produto);
+      if (!produto) return addLog(`Consulta de produto sem resultado para "${consultaProdutoTermo.value.trim()}".`, "error");
+      addLog(`Consulta do produto ${produto.codigo}: estoque ${produto.estoqueAtual}, mínimo ${produto.estoqueMinimo}.`);
+    });
+  }
+
+  if (reposicaoForm) {
+    reposicaoForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const produtoId = Number(getEl("reposicaoProdutoId").value);
+      const quantidade = Number(getEl("reposicaoQuantidade").value);
+      const fornecedor = (getEl("reposicaoFornecedor")?.value || "").trim();
+      const produto = state.produtos.find((p) => p.id === produtoId);
+      if (!produto) return addLog(`Produto ${produtoId} não encontrado para reposição.`, "error");
+      if (quantidade <= 0) return addLog("Informe uma quantidade válida para reposição.", "error");
+      produto.estoqueAtual += quantidade;
+      saveState();
+      addLog(
+        `Entrada de estoque registrada para ${produto.codigo}: +${quantidade}` +
+        `${fornecedor ? ` (Fornecedor: ${fornecedor})` : ""}.`
+      );
+      reposicaoForm.reset();
+      if (consultaProdutoSelecionadoId === produto.id) renderConsultaProduto(produto);
       renderAll();
     });
   }
@@ -242,6 +306,10 @@ const renderAll = () => {
   renderOrdens();
   renderLogs();
   renderResumo();
+  if (consultaProdutoSelecionadoId !== null) {
+    const selecionado = state.produtos.find((p) => p.id === consultaProdutoSelecionadoId) || null;
+    renderConsultaProduto(selecionado);
+  }
 };
 
 loadState();
