@@ -1,47 +1,47 @@
 # ERP PCP CPP
 
-Projeto de estudo em C++ para PCP (Planejamento e Controle da Producao), com foco na industria quimica, combinando:
+Projeto de estudo em C++ para PCP (Planejamento e Controle da Produção), com foco na indústria química, combinando:
 
-- backend em C++17 com arquitetura em camadas
-- painel web para demonstracao de fluxo operacional
-- conceitos de seguranca, auditoria e rastreabilidade
+- backend em C++17 com arquitetura em camadas;
+- painel web para demonstração de fluxo operacional;
+- conceitos de segurança, auditoria e rastreabilidade.
 
-## Visao geral
+## Visão geral
 
 O sistema cobre um fluxo essencial de ERP/PCP:
 
-- cadastro de produtos quimicos e propriedades
-- criacao de ordens de producao com validacoes de estoque
-- indicadores de painel (KPIs)
-- registros operacionais para auditoria
-- modelo extensivel para qualidade, inventario e producao
+- cadastro de produtos químicos e propriedades;
+- criação de ordens de produção com validações de estoque;
+- indicadores de painel (KPIs);
+- registros operacionais para auditoria;
+- modelo extensível para qualidade, inventário e produção.
 
-## Arquitetura da solucao
+## Arquitetura da solução
 
-O backend segue separacao de responsabilidades inspirada em arquitetura limpa e principios SOLID:
+O backend segue separação de responsabilidades inspirada em Arquitetura Limpa e nos princípios SOLID:
 
-- `src/domain`: entidades, enumeracoes, objetos de valor e servicos de dominio
-- `src/application`: casos de uso e objetos de transferencia de dados
-- `src/infrastructure`: repositorios, registros, integracoes e abstracao de banco
-- `src/presentation/cli`: interface de linha de comando
-- `src/security`: autenticacao (RBAC) e trilha de auditoria
-- `src/shared`: utilitarios e excecoes compartilhadas
-- `src/quality`, `src/production`, `src/inventory`: modulos reservados para expansao
+- `src/domain`: entidades, enumerações, objetos de valor e serviços de domínio;
+- `src/application`: casos de uso e objetos de transferência de dados;
+- `src/infrastructure`: repositórios, registros, integrações e abstração de banco;
+- `src/presentation/cli`: interface de linha de comando;
+- `src/security`: autenticação (RBAC) e trilha de auditoria;
+- `src/shared`: utilitários e exceções compartilhadas;
+- `src/quality`, `src/production`, `src/inventory`: módulos reservados para expansão.
 
-## Modulos implementados
+## Módulos implementados
 
-1. Formulacao quimica com historico de revisao (`ChemicalProduct`, `FormulaRevision`)
-2. Rastreabilidade de lotes (`BatchLot`)
-3. Integracao com API quimica (`ChemicalApiClient`)
-4. Estrutura para relatorio FISPQ (`FispqService`)
-5. Planejamento PCP/MRP com sugestao de compra (`CreateProductionOrderUseCase`)
-6. Conversoes de inventario massa-volume (`InventoryService`)
-7. Controle de acesso por perfil e auditoria (`AuthService`, `AuditLogger`)
-8. Ciclo de vida de ordem (`ProductionOrder`, `BatchStatus`)
-9. Motor de decisao de qualidade (`QualityService`, `QualityInspection`)
-10. Servico de indicadores e painel (`DashboardService`)
+1. Formulação química com histórico de revisão (`ChemicalProduct`, `FormulaRevision`);
+2. Rastreabilidade de lotes (`BatchLot`);
+3. Integração com API química (`ChemicalApiClient`);
+4. Estrutura para relatório FISPQ (`FispqService`);
+5. Planejamento PCP/MRP com sugestão de compra (`CreateProductionOrderUseCase`);
+6. Conversões de inventário massa-volume (`InventoryService`);
+7. Controle de acesso por perfil e auditoria (`AuthService`, `AuditLogger`);
+8. Ciclo de vida de ordem (`ProductionOrder`, `BatchStatus`);
+9. Motor de decisão de qualidade (`QualityService`, `QualityInspection`);
+10. Serviço de indicadores e painel (`DashboardService`).
 
-## Estrutura do repositorio
+## Estrutura do repositório
 
 ```text
 ERP_PCP_CPP/
@@ -65,13 +65,13 @@ ERP_PCP_CPP/
 
 ## Requisitos
 
-- compilador C++ com suporte a C++17 (g++, clang ou MSVC)
-- Git
-- navegador moderno para o painel web
+- compilador C++ com suporte ao padrão C++17 (g++, clang ou MSVC);
+- Git;
+- navegador moderno para o painel web.
 
-## Compilacao e execucao (CLI)
+## Compilação e execução (CLI)
 
-No diretorio raiz do projeto:
+No diretório raiz do projeto:
 
 ```bash
 g++ -std=c++17 main.cpp src/domain/entities/*.cpp src/domain/services/*.cpp src/application/usecases/*.cpp src/infrastructure/repositories/*.cpp src/infrastructure/api/*.cpp src/infrastructure/database/*.cpp src/infrastructure/logging/*.cpp src/security/auth/*.cpp src/security/audit/*.cpp src/presentation/cli/*.cpp -o erp_pcp_enterprise.exe
@@ -85,7 +85,7 @@ Depois:
 
 ## Painel web (UI)
 
-A interface web esta em `ui/` com as paginas:
+A interface web está em `ui/` com as páginas:
 
 - `ui/login.html`
 - `ui/index.html`
@@ -93,39 +93,39 @@ A interface web esta em `ui/` com as paginas:
 - `ui/ordens.html`
 - `ui/logs.html`
 
-Para melhor compatibilidade (PWA/service worker), execute com servidor local simples:
+Para melhor compatibilidade (PWA/service worker), execute um servidor local simples:
 
 ```bash
 python -m http.server 5500
 ```
 
-Depois abra:
+Depois, abra:
 
 - `http://localhost:5500/ui/login.html`
 
-Credenciais de demonstracao:
+Credenciais de demonstração:
 
-- `admin` / `pcp123` (administrador)
-- `engineer` / `pcp123` (engenharia)
+- `admin` / `pcp123` (administrador);
+- `engineer` / `pcp123` (engenharia).
 
-## Seguranca
+## Segurança
 
-- autenticacao por perfis (RBAC) para operacoes sensiveis
-- logs operacionais e auditoria para rastreabilidade
-- base preparada para endurecimento futuro (tokens, hashing robusto, trilha ampliada)
+- autenticação por perfis (RBAC) para operações sensíveis;
+- logs operacionais e auditoria para rastreabilidade;
+- base preparada para endurecimento futuro (tokens, hashing robusto e trilha ampliada).
 
-## Estrategia de persistencia
+## Estratégia de persistência
 
-`SQLiteReadyDatabase` fornece uma abstração pronta para evoluir para SQLite sem acoplamento da regra de negocio.
+`SQLiteReadyDatabase` fornece uma abstração pronta para evolução para SQLite, sem acoplamento da regra de negócio.
 
-## Proximos passos
+## Próximos passos
 
-- [ ] persistencia completa em SQLite
-- [ ] workflow de aprovacao de revisao de formula
-- [ ] genealogia de lotes e rastreabilidade avancada
-- [ ] integracao externa de risco/FISPQ
-- [ ] API REST para o painel web
-- [ ] pipeline CI/CD e testes automatizados
+- persistência completa em SQLite;
+- workflow de aprovação de revisão de fórmula;
+- genealogia de lotes e rastreabilidade avançada;
+- integração externa de risco/FISPQ;
+- API REST para o painel web;
+- pipeline CI/CD e testes automatizados.
 
 ## Imagens do sistema
 
@@ -133,6 +133,6 @@ Credenciais de demonstracao:
 
 ![Painel principal do ERP PCP](docs/images/dashboard-interface.png)
 
-## Licenca
+## Licença
 
-Projeto de estudo para fins academicos e demonstracao tecnica.
+Projeto de estudo para fins acadêmicos e demonstração técnica.
