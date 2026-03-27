@@ -216,6 +216,28 @@ a {
   font-size: 0.8rem;
 }
 
+.sidebar-brand {
+  margin-top: 18px;
+  padding: 14px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  text-align: center;
+}
+
+.sidebar-brand img {
+  width: min(210px, 100%);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.45));
+}
+
+.sidebar-brand .muted {
+  margin: 10px 0 0;
+  font-size: 0.8rem;
+}
+
 .nav-item {
   display: flex;
   align-items: center;
@@ -272,6 +294,15 @@ a {
   margin: 0 auto;
 }
 
+.app-footer {
+  margin-top: 18px;
+  padding: 16px 18px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .glass {
   background: var(--card);
   border: 1px solid var(--border);
@@ -294,6 +325,24 @@ a {
   gap: 16px;
   margin-bottom: 18px;
   transition: all 0.3s ease;
+}
+
+.topbar-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.topbar-logo {
+  height: 40px;
+  width: auto;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.35));
+}
+
+.topbar-title-text {
+  min-width: 0;
 }
 .topbar-actions {
   display: flex;
@@ -645,6 +694,12 @@ tr:last-child td {
   .topbar {
     display: block;
     padding: 16px;
+  }
+  .topbar-title {
+    gap: 12px;
+  }
+  .topbar-logo {
+    height: 34px;
   }
   .topbar h2 {
     line-height: 1.3;

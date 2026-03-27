@@ -17,4 +17,7 @@ bin/
 obj/
 
 data/*.json
+!data/demo/users.example.json
+data/private/*.json
+data/users.json
 ui/.DS_Store

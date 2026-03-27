@@ -69,6 +69,10 @@ ERP_PCP_CPP/
 - Git;
 - navegador moderno para o painel web.
 
+## Dependência JSON (nlohmann/json)
+
+Este projeto inclui a biblioteca `nlohmann/json` (single-header) em `third_party/nlohmann/json.hpp` para manipular o arquivo de usuários da demo de login/RBAC.
+
 ## Compilação e execução (CLI)
 
 No diretório raiz do projeto:
@@ -107,6 +111,24 @@ Credenciais de demonstração:
 
 - `admin` / `pcp123` (administrador);
 - `engineer` / `pcp123` (engenharia).
+
+## Arquivo de usuários (não expor senhas no GitHub)
+
+Para manter o repositório publicável sem expor logins/senhas reais:
+
+- **Modelo versionado (público)**: `data/demo/users.example.json`
+- **Arquivo real (local, ignorado pelo git)**: `data/private/users.json`
+
+Para demo local, copie o modelo:
+
+```bash
+mkdir -p data/private
+cp data/demo/users.example.json data/private/users.json
+```
+
+Opcionalmente, você pode apontar para outro caminho via variável de ambiente:
+
+- `ERP_PCP_USERS_FILE` (ex.: `data/private/users.json`)
 
 ## Segurança
 
