@@ -300,6 +300,17 @@ const bindEvents = () => {
   if (importJson) importJson.addEventListener("change", (e) => importarJson(e.target.files[0]));
 };
 
+const renderAuthUi = () => {
+  const label = getEl("currentUserLabel");
+  if (!label) return;
+  if (!Auth.isLoggedIn()) {
+    label.textContent = "";
+    return;
+  }
+  const user = Auth.currentUser();
+  label.textContent = user ? `Logado como: ${user}` : "";
+};
+
 const renderAll = () => {
   updateKPIs();
   renderProdutos();
@@ -315,3 +326,4 @@ const renderAll = () => {
 loadState();
 bindEvents();
 renderAll();
+renderAuthUi();
