@@ -109,8 +109,7 @@ Depois, abra:
 
 Credenciais de demonstração:
 
-- `admin` / `pcp123` (administrador);
-- `engineer` / `pcp123` (engenharia).
+- Consulte `data/demo/login-credentials.txt`.
 
 ## Arquivo de usuários (não expor senhas no GitHub)
 
